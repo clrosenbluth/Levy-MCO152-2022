@@ -15,7 +15,7 @@ public class RPN
      * @param userInput the string typed by the user, presumably an RPN expression
      * @return a string, either the answer or an appropriate error message
      */
-    private String evaluate(String userInput)
+    public String evaluate(String userInput)
     {
         String answer = "Ended with error";
         boolean hasError = false;
