@@ -8,13 +8,26 @@ class QuadraticEquationTest
     public void getX()
     {
         // given
-        QuadraticEquation q = new QuadraticEquation(6, -11, -35.5);
+        QuadraticEquation q1 = new QuadraticEquation(6, -11, -35.5);
 
         // when
-        double[] xVals = q.getX();
+        double[] xVals1 = q1.getX();
 
         // then
-        assertEquals(-1.683, xVals[0], .001);
-        assertEquals(3.516, xVals[1], .001);
+        assertEquals(-1.683, xVals1[0], .001);
+        assertEquals(3.516, xVals1[1], .001);
+        assertArrayEquals(new double[] {-1.683, 3.516}, xVals1, .001);
+    }
+
+    public void getXNaN()
+    {
+        // given
+        QuadraticEquation q2 = new QuadraticEquation(6, -11, 35.5);
+
+        // when
+        double[] xVals2 = q2.getX();
+
+        // then
+        assertArrayEquals(new double[] {Double.NaN, Double.NaN}, xVals2);
     }
 }
