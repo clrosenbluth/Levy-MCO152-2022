@@ -3,6 +3,10 @@ import java.util.Stack;
 public class RPN
 {
     private final Stack<Double> rpnStack;
+    public static final String genericErrorMsg = "Ended with error";
+    public static final String syntaxErrorMsg = "Error: syntax error encountered";
+    public static final String invalidTokenMsg = "Error: invalid token encountered.";
+    public static final String stackSizeMsg = "Error: stack is too big. The expression is likely malformed.";
 
     public RPN ()
     {
@@ -17,12 +21,9 @@ public class RPN
      */
     public String evaluate(String userInput)
     {
-        while (!rpnStack.isEmpty())
-        {
-            rpnStack.pop();
-        }
+        rpnStack.clear();
 
-        String answer = "Ended with error";
+        String answer = genericErrorMsg;
         boolean hasError = false;
 
         try
@@ -45,14 +46,14 @@ public class RPN
                     }
                     catch (Exception e)
                     {
-                        answer = "Error: syntax error encountered";
+                        answer = syntaxErrorMsg;
                         hasError = true;
                         break;
                     }
                 }
                 else    // token is neither a double nor an operator
                 {
-                    answer = "Error: invalid token encountered.";
+                    answer = invalidTokenMsg;
                     hasError = true;
                     break;
                 }
@@ -65,7 +66,7 @@ public class RPN
 
             if (!rpnStack.isEmpty())
             {
-                answer = "Error: stack is too big. The expression is likely malformed.";
+                answer = stackSizeMsg;
             }
         }
         catch (Exception e)
