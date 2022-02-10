@@ -4,9 +4,9 @@ public class RPN
 {
     private final Stack<Double> rpnStack;
 
-    public RPN (Stack<Double> rpnStack)
+    public RPN ()
     {
-        this.rpnStack = rpnStack;
+        this.rpnStack = new Stack<>();
     }
 
     /**
