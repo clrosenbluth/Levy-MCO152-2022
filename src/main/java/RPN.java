@@ -17,6 +17,11 @@ public class RPN
      */
     public String evaluate(String userInput)
     {
+        while (!rpnStack.isEmpty())
+        {
+            rpnStack.pop();
+        }
+
         String answer = "Ended with error";
         boolean hasError = false;
 
@@ -36,7 +41,7 @@ public class RPN
                     {
                         Double secondNumber = rpnStack.pop();
                         Double firstNumber = rpnStack.pop();
-                        doOperation(rpnStack, element, firstNumber, secondNumber);
+                        doOperation(element, firstNumber, secondNumber);
                     }
                     catch (Exception e)
                     {
@@ -67,22 +72,20 @@ public class RPN
         {
             answer = e.getMessage();
         }
-
         return answer;
     }
 
     /**
      * A method to do an operation in an RPN stack
-     * @param rpnStack the stack that the answer will be pushed to
-     * @param element the operator (in String form)
+     * @param operator the operator (in String form)
      * @param firstNumber the first number do be used in the operation
      * @param secondNumber the second number do be used in the operation
      */
-    private void doOperation(Stack<Double> rpnStack, String element, Double firstNumber, Double secondNumber)
+    private void doOperation(String operator, Double firstNumber, Double secondNumber)
     {
-        double answer;
+        double answer = 0;
 
-        switch (element) {
+        switch (operator) {
             case "+":
                 answer = firstNumber + secondNumber;
                 break;
@@ -92,7 +95,7 @@ public class RPN
             case "/":
                 answer = firstNumber / secondNumber;
                 break;
-            default:
+            case "*":
                 answer = firstNumber * secondNumber;
                 break;
         }
@@ -112,7 +115,7 @@ public class RPN
             Double.parseDouble(element);
             return true;
         }
-        catch (Exception e)
+        catch (NumberFormatException e)
         {
             return false;
         }

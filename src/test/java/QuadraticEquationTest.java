@@ -16,7 +16,6 @@ class QuadraticEquationTest
         // then
         assertEquals(-1.683, xVals1[0], .001);
         assertEquals(3.516, xVals1[1], .001);
-        assertArrayEquals(new double[] {-1.683, 3.516}, xVals1, .001);
     }
 
     public void getXNaN()

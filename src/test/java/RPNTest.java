@@ -38,12 +38,13 @@ class RPNTest
         // given
         RPN rpnTester = new RPN();
         String test = "2 3 4 +";
+        String errorMsg = "Error: stack is too big. The expression is likely malformed.";
 
         // where
         String result = rpnTester.evaluate(test);
 
         // then
-        assertEquals("Error: stack is too big. The expression is likely malformed.", result);
+        assertEquals(errorMsg, result);
     }
 
 }
