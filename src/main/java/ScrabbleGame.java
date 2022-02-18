@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ScrabbleGame
 {
@@ -63,10 +64,10 @@ public class ScrabbleGame
     private void addTiles()
     {
         int ASCII_A = 65;
-        int ASCII_Z = 90;
+        Random random = new Random();
         while (tiles.size() < 7)
         {
-            int tileAscii = (int) (Math.random() * (ASCII_Z - ASCII_A)) + ASCII_A;
+            int tileAscii = ASCII_A + random.nextInt(26);
             tiles.add((char) tileAscii);
         }
     }
@@ -78,26 +79,23 @@ public class ScrabbleGame
 
     private boolean hasTiles(String word)
     {
-        boolean hasTiles = false;
-        if (hasEnoughTiles(word))
+        if (!hasEnoughTiles(word)) {
+            return false;
+        }
+        char[] charsToCheck = word.toCharArray();
+        List<Character> tempTiles = new ArrayList<>(tiles);
+        for (Character letter : charsToCheck)
         {
-            char[] charsToCheck = word.toCharArray();
-            List<Character> tempTiles = new ArrayList<>(tiles);
-            hasTiles = true;
-            for (Character letter : charsToCheck)
+            if (tempTiles.contains(letter))
             {
-                if (tempTiles.contains(letter))
-                {
-                    tempTiles.remove(letter);
-                }
-                else
-                {
-                    hasTiles = false;
-                    break;
-                }
+                tempTiles.remove(letter);
+            }
+            else
+            {
+                return false;
             }
         }
-        return hasTiles;
+        return true;
     }
 
     private boolean hasEnoughTiles(String word)
