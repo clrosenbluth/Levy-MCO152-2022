@@ -4,12 +4,18 @@ import java.util.Random;
 
 public class ScrabbleGame
 {
-    private final List<String> playedWords = new ArrayList<>();
-    private final List<Character> tiles = new ArrayList<>();
-    private final ScrabbleDictionary dictionary = new ScrabbleDictionary();
+    final List<String> playedWords = new ArrayList<>();
+    final List<Character> tiles = new ArrayList<>();
+    private final ScrabbleDictionary dictionary;
+    private LetterPool letterPool;
 
-    public ScrabbleGame()
+    public ScrabbleGame(
+            ScrabbleDictionary dictionary,
+            LetterPool letterPool
+    )
     {
+        this.dictionary = dictionary;
+        this.letterPool = letterPool;
         // give the player 7 random tiles.
         addTiles();
     }
@@ -30,45 +36,13 @@ public class ScrabbleGame
         return false;
     }
 
-    /**
-     * A modified playWord method for testing. This ensures that known tiles are added.
-     * @param word
-     * @return
-     */
-    public boolean playWordTest(final String word)
-    {
-        String playWord = word.toLowerCase();
-        makeTestTiles();
-        if (isWord(playWord) && hasTiles(playWord))
-        {
-            removeTiles(playWord);
-            addWord(playWord);
-            makeTestTiles();
-            return true;
-        }
-        return false;
-    }
-
-    private void makeTestTiles()
-    {
-        tiles.clear();
-        tiles.add('a');
-        tiles.add('u');
-        tiles.add('d');
-        tiles.add('i');
-        tiles.add('o');
-        tiles.add('g');
-        tiles.add('r');
-    }
-
     private void addTiles()
     {
         int ASCII_A = 65;
         Random random = new Random();
         while (tiles.size() < 7)
         {
-            int tileAscii = ASCII_A + random.nextInt(26);
-            tiles.add((char) tileAscii);
+            tiles.add(letterPool.getRandomLetter());
         }
     }
 
