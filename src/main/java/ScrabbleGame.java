@@ -7,7 +7,9 @@ public class ScrabbleGame
     final List<String> playedWords = new ArrayList<>();
     final List<Character> tiles = new ArrayList<>();
     private final ScrabbleDictionary dictionary;
-    private LetterPool letterPool;
+    private final LetterPool letterPool;
+
+    private final int numTiles = 7;
 
     public ScrabbleGame(
             ScrabbleDictionary dictionary,
@@ -16,7 +18,6 @@ public class ScrabbleGame
     {
         this.dictionary = dictionary;
         this.letterPool = letterPool;
-        // give the player 7 random tiles.
         addTiles();
     }
 
@@ -36,22 +37,20 @@ public class ScrabbleGame
         return false;
     }
 
-    private void addTiles()
+    void addTiles()
     {
-        int ASCII_A = 65;
-        Random random = new Random();
-        while (tiles.size() < 7)
+        while (tiles.size() < numTiles)
         {
             tiles.add(letterPool.getRandomLetter());
         }
     }
 
-    private boolean isWord(String word)
+    boolean isWord(String word)
     {
         return dictionary.isWord(word);
     }
 
-    private boolean hasTiles(String word)
+    boolean hasTiles(String word)
     {
         if (!hasEnoughTiles(word)) {
             return false;
@@ -72,12 +71,12 @@ public class ScrabbleGame
         return true;
     }
 
-    private boolean hasEnoughTiles(String word)
+    boolean hasEnoughTiles(String word)
     {
         return word.length() <= tiles.size();
     }
 
-    private void removeTiles(String word)
+    void removeTiles(String word)
     {
         char[] letters = word.toCharArray();
         for (Character letter : letters)
@@ -86,7 +85,7 @@ public class ScrabbleGame
         }
     }
 
-    private void addWord(String word)
+    void addWord(String word)
     {
         playedWords.add(word);
     }

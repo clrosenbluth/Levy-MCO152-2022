@@ -12,40 +12,44 @@ class ScrabbleGameTest
     public void playWord_true()
     {
         // given
+        String word = "HELLO";
         Mockito.doReturn(true)
                 .when(dictionary)
-                .isWord("HELLO");
+                .isWord(word);
         Mockito.doReturn('A', 'H', 'E', 'L', 'L', 'O')
                 .when(letterPool)
                 .getRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
+        boolean val = game.playWord(word);
 
-        // then.getRandomLetter()
-        assertTrue(game.playWord("HELLO"));
+        // then
+        assertTrue(val);
+        assertTrue(game.playedWords.contains(word));
+        assertEquals(7, game.tiles.size());
         Mockito.verify(letterPool, Mockito.times(7+5)).
                 getRandomLetter();
-        assertTrue(game.playedWords.contains("HELLO"));
-                    
     }
 
     @Test
     public void playWord_false()
     {
         // given
+        String word = "LOGO";
         Mockito.doReturn(true)
                 .when(dictionary)
-                .isWord("LOGO");
+                .isWord(word);
         Mockito.doReturn('A', 'H', 'E', 'L', 'L', 'O')
                 .when(letterPool)
                 .getRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
+        boolean val = game.playWord(word);
 
         // then
-        assertFalse(game.playWord("LOGO"));
+        assertFalse(val);
         assertTrue(game.playedWords.isEmpty());
         Mockito.verify(letterPool, Mockito.times(7))
                 .getRandomLetter();
@@ -56,55 +60,23 @@ class ScrabbleGameTest
     public void playWord_notInDictionary()
     {
         // given
+        String word = "HEL";
         Mockito.doReturn('A', 'H', 'E', 'L', 'L', 'O')
                 .when(letterPool)
                 .getRandomLetter();
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val = game.playWord("HEL");
+        boolean val = game.playWord(word);
 
         // then
         assertFalse(val);
         Mockito.verify(dictionary)
-                .isWord("HEL");
+                .isWord(word);
         assertTrue(game.playedWords.isEmpty());
+        Mockito.verify(letterPool, Mockito.times(7))
+                .getRandomLetter();
+        assertEquals(7, game.tiles.size());
     }
-
-    /*@Test
-    public void playWord_wrongTiles()
-    {
-        // given
-        ScrabbleGame game = new ScrabbleGame();
-
-        // when
-
-        // then
-        assertFalse(game.playWordTest("word"));
-    }
-
-    @Test
-    public void playWord_notWord()
-    {
-        // given
-        ScrabbleGame game = new ScrabbleGame();
-
-        // when
-
-        // then
-        assertFalse(game.playWordTest("udio"));
-    }
-
-    @Test
-    public void playWord_tooLong()
-    {
-        // given
-        ScrabbleGame game = new ScrabbleGame();
-
-        // when
-
-        // then
-        assertFalse(game.playWordTest("audiograph"));
-    }*/
 
 }
