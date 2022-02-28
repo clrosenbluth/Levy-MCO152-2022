@@ -9,7 +9,7 @@ public class ScrabbleGame
     private final ScrabbleDictionary dictionary;
     private final LetterPool letterPool;
 
-    private final int numTiles = 7;
+    private final static int numTiles = 7;
 
     public ScrabbleGame(
             ScrabbleDictionary dictionary,
