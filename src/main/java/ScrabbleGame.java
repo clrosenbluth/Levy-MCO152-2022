@@ -27,6 +27,7 @@ public class ScrabbleGame
      */
     public boolean playWord(String word)
     {
+        word = word.toUpperCase();
         if (isWord(word) && hasTiles(word))
         {
             removeTiles(word);
