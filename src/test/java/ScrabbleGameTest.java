@@ -9,7 +9,7 @@ class ScrabbleGameTest
     LetterPool letterPool = Mockito.mock(LetterPool.class);
 
     @Test
-    public void playWord_true()
+    public void playWord_true() throws NotAWordException, InsufficientTilesException
     {
         // given
         String word = "HELLO";
@@ -33,7 +33,7 @@ class ScrabbleGameTest
     }
 
     @Test
-    public void playWord_false()
+    public void playWord_false() throws NotAWordException, InsufficientTilesException
     {
         // given
         String word = "LOGO";
@@ -57,7 +57,7 @@ class ScrabbleGameTest
     }
 
     @Test
-    public void playWord_notInDictionary()
+    public void playWord_notInDictionary() throws NotAWordException, InsufficientTilesException
     {
         // given
         String word = "HEL";

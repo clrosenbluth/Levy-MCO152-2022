@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -20,33 +21,57 @@ public class ScrabbleFrame extends JFrame
         setTitle("Touro Scrabble");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setLayout(new FlowLayout());
 
+        createScrabbleGame();
+
+        addVerticalPanel();
+        addTilesPanel(verticalPanel);
+        addInputField();
+        addScoreLabel();
+        addSubmitButton();
+        addOutputLabel();
+
+    }
+
+    private void createScrabbleGame()
+    {
         ScrabbleDictionary dictionary = new ScrabbleDictionary();
         LetterPool letterPool = new LetterPool();
         scrabbleGame = new ScrabbleGame(dictionary, letterPool);
-        
-        verticalPanel = new JPanel();
-        verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
-        add(verticalPanel);
+    }
 
-        addTilesPanel(verticalPanel);
+    private void addOutputLabel()
+    {
+        output = new JLabel("Output");
+        verticalPanel.add(output);
+    }
 
-        inputField = new JTextField();
-        inputField.setPreferredSize(new Dimension(120, 60));
-        verticalPanel.add(inputField);
-
-        scoreLabel = new JLabel("0");
-        verticalPanel.add(scoreLabel);
-
+    private void addSubmitButton()
+    {
         submit = new JButton("Submit");
         submit.addActionListener(this::onSubmitClicked);
         verticalPanel.add(submit);
+    }
 
-        output = new JLabel("Output");
-        verticalPanel.add(output);
+    private void addScoreLabel()
+    {
+        scoreLabel = new JLabel("0");
+        verticalPanel.add(scoreLabel);
+    }
 
+    private void addInputField()
+    {
+        inputField = new JTextField();
+        inputField.setPreferredSize(new Dimension(120, 60));
+        verticalPanel.add(inputField);
+    }
+
+    private void addVerticalPanel()
+    {
+        verticalPanel = new JPanel();
+        verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
+        add(verticalPanel);
     }
 
     private void addTilesPanel(JPanel verticalPanel)
@@ -54,9 +79,13 @@ public class ScrabbleFrame extends JFrame
         JPanel tilesPanel = new JPanel();
         tilesPanel.setLayout(new FlowLayout());
         tiles = new JLabel[7];
+
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
+
         for (int i = 0; i < 7; i++)
         {
             tiles[i] = new JLabel(scrabbleGame.tiles.get(i).toString());
+            tiles[i].setBorder(border);
             tilesPanel.add(tiles[i]);
         }
         verticalPanel.add(tilesPanel);
@@ -65,8 +94,10 @@ public class ScrabbleFrame extends JFrame
     public void onSubmitClicked(ActionEvent event)
     {
         String word = inputField.getText();
-        if (scrabbleGame.playWord(word))
+        try
         {
+            scrabbleGame.playWord(word);
+
             score++;
             scoreLabel.setText(String.valueOf(score));
 
@@ -74,6 +105,9 @@ public class ScrabbleFrame extends JFrame
             {
                 tiles[i].setText(scrabbleGame.tiles.get(i).toString());
             }
+        } catch (NotAWordException | InsufficientTilesException e)
+        {
+            output.setText(e.getMessage());
         }
 
     }

@@ -25,17 +25,17 @@ public class ScrabbleGame
      * If the word exists in the ScrabbleDictionary and the letters exist in the tiles List,
      * remove the letters from the list, add new random letters, and add the word to playedWords List.
      */
-    public boolean playWord(String word)
+    public boolean playWord(String word) throws NotAWordException, InsufficientTilesException
     {
         word = word.toUpperCase();
-        if (isWord(word) && hasTiles(word))
-        {
-            removeTiles(word);
-            addWord(word);
-            addTiles();
-            return true;
-        }
-        return false;
+
+        if (!isWord(word)) throw new NotAWordException();
+        if (!hasTiles(word)) throw new InsufficientTilesException();
+
+        removeTiles(word);
+        addWord(word);
+        addTiles();
+        return true;
     }
 
     void addTiles()
