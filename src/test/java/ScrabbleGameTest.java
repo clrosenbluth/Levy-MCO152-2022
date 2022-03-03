@@ -9,7 +9,7 @@ class ScrabbleGameTest
     LetterPool letterPool = Mockito.mock(LetterPool.class);
 
     @Test
-    public void playWord_true() throws NotAWordException, InsufficientTilesException
+    public void playWord_true()
     {
         // given
         String word = "HELLO";
@@ -22,7 +22,14 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val = game.playWord(word);
+        boolean val;
+        try
+        {
+            val = game.playWord(word);
+        } catch (Exception e)
+        {
+            val = false;
+        }
 
         // then
         assertTrue(val);
@@ -33,7 +40,7 @@ class ScrabbleGameTest
     }
 
     @Test
-    public void playWord_false() throws NotAWordException, InsufficientTilesException
+    public void playWord_false()
     {
         // given
         String word = "LOGO";
@@ -46,7 +53,14 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val = game.playWord(word);
+        boolean val;
+        try
+        {
+            val = game.playWord(word);
+        } catch (Exception e)
+        {
+            val = false;
+        }
 
         // then
         assertFalse(val);
@@ -57,7 +71,7 @@ class ScrabbleGameTest
     }
 
     @Test
-    public void playWord_notInDictionary() throws NotAWordException, InsufficientTilesException
+    public void playWord_notInDictionary()
     {
         // given
         String word = "HEL";
@@ -67,7 +81,14 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val = game.playWord(word);
+        boolean val;
+        try
+        {
+            val = game.playWord(word);
+        } catch (Exception e)
+        {
+            val = false;
+        }
 
         // then
         assertFalse(val);
