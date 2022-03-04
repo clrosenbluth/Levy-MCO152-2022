@@ -22,14 +22,7 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val;
-        try
-        {
-            val = game.playWord(word);
-        } catch (Exception e)
-        {
-            val = false;
-        }
+        boolean val = game.playWord(word);
 
         // then
         assertTrue(val);
@@ -53,14 +46,7 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val;
-        try
-        {
-            val = game.playWord(word);
-        } catch (Exception e)
-        {
-            val = false;
-        }
+        boolean val = game.playWord(word);
 
         // then
         assertFalse(val);
@@ -81,14 +67,7 @@ class ScrabbleGameTest
         ScrabbleGame game = new ScrabbleGame(dictionary, letterPool);
 
         // when
-        boolean val;
-        try
-        {
-            val = game.playWord(word);
-        } catch (Exception e)
-        {
-            val = false;
-        }
+        boolean val = game.playWord(word);
 
         // then
         assertFalse(val);

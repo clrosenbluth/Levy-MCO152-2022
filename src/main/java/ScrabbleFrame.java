@@ -43,7 +43,7 @@ public class ScrabbleFrame extends JFrame
 
     private void addOutputLabel()
     {
-        output = new JLabel("Output");
+        output = new JLabel(scrabbleGame.getMessageString());
         verticalPanel.add(output);
     }
 
@@ -94,10 +94,8 @@ public class ScrabbleFrame extends JFrame
     public void onSubmitClicked(ActionEvent event)
     {
         String word = inputField.getText();
-        try
+        if (scrabbleGame.playWord(word))
         {
-            scrabbleGame.playWord(word);
-
             score++;
             scoreLabel.setText(String.valueOf(score));
 
@@ -105,10 +103,8 @@ public class ScrabbleFrame extends JFrame
             {
                 tiles[i].setText(scrabbleGame.tiles.get(i).toString());
             }
-        } catch (NotAWordException | InsufficientTilesException e)
-        {
-            output.setText(e.getMessage());
         }
+        output.setText(scrabbleGame.getMessageString());
 
     }
 
