@@ -26,7 +26,7 @@ public class ScrabbleFrame extends JFrame
         createScrabbleGame();
 
         addVerticalPanel();
-        addTilesPanel(verticalPanel);
+        addTilesPanel();
         addInputField();
         addScoreLabel();
         addSubmitButton();
@@ -74,7 +74,7 @@ public class ScrabbleFrame extends JFrame
         add(verticalPanel);
     }
 
-    private void addTilesPanel(JPanel verticalPanel)
+    private void addTilesPanel()
     {
         JPanel tilesPanel = new JPanel();
         tilesPanel.setLayout(new FlowLayout());
