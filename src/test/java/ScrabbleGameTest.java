@@ -30,6 +30,7 @@ class ScrabbleGameTest
         assertEquals(7, game.tiles.size());
         Mockito.verify(letterPool, Mockito.times(7+5)).
                 getRandomLetter();
+        assertEquals("Success!", game.getMessageString());
     }
 
     @Test
@@ -54,6 +55,7 @@ class ScrabbleGameTest
         Mockito.verify(letterPool, Mockito.times(7))
                 .getRandomLetter();
         assertEquals(7, game.tiles.size());
+        assertEquals("Word cannot be formed from current tiles.", game.getMessageString());
     }
 
     @Test
@@ -77,6 +79,7 @@ class ScrabbleGameTest
         Mockito.verify(letterPool, Mockito.times(7))
                 .getRandomLetter();
         assertEquals(7, game.tiles.size());
+        assertEquals("Not a valid word.", game.getMessageString());
     }
 
 }

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ScrabbleGame
 {
@@ -8,6 +7,8 @@ public class ScrabbleGame
     final List<Character> tiles = new ArrayList<>();
     private final ScrabbleDictionary dictionary;
     private final LetterPool letterPool;
+
+    private Messages message = Messages.DEFAULT;
 
     private final static int numTiles = 7;
 
@@ -27,14 +28,30 @@ public class ScrabbleGame
      */
     public boolean playWord(String word)
     {
-        if (isWord(word) && hasTiles(word))
+        word = word.toUpperCase();
+
+        if (!isWord(word))
         {
-            removeTiles(word);
-            addWord(word);
-            addTiles();
-            return true;
+            this.message = Messages.NOT_A_WORD;
+            return false;
         }
-        return false;
+
+        if (!hasTiles(word))
+        {
+            this.message = Messages.INSUFFICIENT_TILES;
+            return false;
+        }
+
+        removeTiles(word);
+        addWord(word);
+        addTiles();
+        this.message = Messages.IS_A_WORD;
+        return true;
+    }
+
+    public String getMessageString()
+    {
+        return this.message.label;
     }
 
     void addTiles()
