@@ -22,8 +22,7 @@ public class ScrabblePresenter
             view.setScore(String.valueOf(score));
             view.setTileLabels(model.getTiles());
         }
-        // show message here
-        // redo this: output.setText(scrabbleGame.getMessageString());
+        this.setOutput();
     }
 
     public void fillTiles()
