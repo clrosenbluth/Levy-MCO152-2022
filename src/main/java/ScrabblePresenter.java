@@ -2,6 +2,8 @@
  * Presenter: acts on model and view. Takes data from model and formats it for display in view
  */
 
+import java.util.List;
+
 public class ScrabblePresenter
 {
     private final ScrabbleFrame view;
@@ -20,14 +22,14 @@ public class ScrabblePresenter
         {
             score++;
             view.setScore(String.valueOf(score));
-            view.setTileLabels(model.getTiles());
+            view.setTiles(model.getTiles());
         }
         this.setOutput();
     }
 
     public void fillTiles()
     {
-        view.setTileLabels(model.getTiles());
+        view.setTiles(model.getTiles());
     }
 
     public void setOutput()

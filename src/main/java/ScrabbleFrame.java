@@ -113,7 +113,7 @@ public class ScrabbleFrame extends JFrame
         frame.setVisible(true);
     }
 
-    public void setTileLabels(List<Character> tiles)
+    public void setTiles(List<Character> tiles)
     {
         for (int i = 0; i < tiles.size(); i++)
         {
