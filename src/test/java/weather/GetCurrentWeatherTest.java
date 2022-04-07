@@ -1,6 +1,7 @@
 package weather;
 
 import org.junit.jupiter.api.Test;
+import weather.json.CurrentWeather;
 
 import java.io.IOException;
 
@@ -8,6 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GetCurrentWeatherTest
 {
+
+    @Test
+    void getCurrentWeather() throws IOException
+    {
+        // given
+        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+        String zipcode = "10019";
+
+        // when
+        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather(zipcode);
+
+        // then
+        assertTrue(currentWeather.getTemperature() > 0);
+        assertTrue(currentWeather.getMaxTemperature() > 0);
+        assertTrue(currentWeather.getMinTemperature() > 0);
+        assertNotNull(currentWeather.getIcon());
+        assertNotNull(currentWeather.getDescription());
+    }
 
     @Test
     void getTemperature() throws IOException

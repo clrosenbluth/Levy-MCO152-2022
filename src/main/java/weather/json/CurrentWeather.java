@@ -12,12 +12,12 @@ public class CurrentWeather
 
     public double getMaxTemperature()
     {
-        return main.temp_max;
+        return main.tempMax;
     }
 
     public double getMinTemperature()
     {
-        return main.temp_min;
+        return main.tempMin;
     }
 
     public String getDescription()

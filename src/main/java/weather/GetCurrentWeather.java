@@ -9,6 +9,23 @@ import java.io.IOException;
 
 public class GetCurrentWeather
 {
+
+    public CurrentWeather getCurrentWeather(String zipcode) throws IOException
+    {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://samples.openweathermap.org")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        OpenWeatherMapService service = retrofit.create(OpenWeatherMapService.class);
+
+        CurrentWeather currentWeather = service.getCurrentWeather(zipcode)
+                .execute()
+                .body();
+
+        return currentWeather;
+    }
+
     /**
      *
      * @return the current temperature in Kelvin
