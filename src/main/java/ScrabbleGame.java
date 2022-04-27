@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Model
+ */
+
 public class ScrabbleGame
 {
     final List<String> playedWords = new ArrayList<>();
@@ -20,6 +24,11 @@ public class ScrabbleGame
         this.dictionary = dictionary;
         this.letterPool = letterPool;
         addTiles();
+    }
+
+    public List<Character> getTiles()
+    {
+        return this.tiles;
     }
 
     /**
@@ -106,4 +115,6 @@ public class ScrabbleGame
     {
         playedWords.add(word);
     }
+
+
 }

@@ -2,19 +2,23 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
+
+/*
+ * View
+ */
 
 public class ScrabbleFrame extends JFrame
 {
-    private int score = 0;
+    private final ScrabblePresenter presenter;
+
     private JLabel scoreLabel;
-    private JLabel[] tiles;
+    private JLabel[] tileLabels;
     private JTextField inputField;
     private JButton submit;
     private JLabel output;
     
     private JPanel verticalPanel;
-
-    private ScrabbleGame scrabbleGame;
 
     public ScrabbleFrame()
     {
@@ -23,7 +27,11 @@ public class ScrabbleFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        createScrabbleGame();
+        ScrabbleDictionary dictionary = new ScrabbleDictionary();
+        LetterPool letterPool = new LetterPool();
+        ScrabbleGame scrabbleGame = new ScrabbleGame(dictionary, letterPool);
+
+        presenter = new ScrabblePresenter(this, scrabbleGame);
 
         addVerticalPanel();
         addTilesPanel();
@@ -34,17 +42,11 @@ public class ScrabbleFrame extends JFrame
 
     }
 
-    private void createScrabbleGame()
-    {
-        ScrabbleDictionary dictionary = new ScrabbleDictionary();
-        LetterPool letterPool = new LetterPool();
-        scrabbleGame = new ScrabbleGame(dictionary, letterPool);
-    }
-
     private void addOutputLabel()
     {
-        output = new JLabel(scrabbleGame.getMessageString());
+        output = new JLabel();
         verticalPanel.add(output);
+        presenter.setOutput();
     }
 
     private void addSubmitButton()
@@ -78,39 +80,49 @@ public class ScrabbleFrame extends JFrame
     {
         JPanel tilesPanel = new JPanel();
         tilesPanel.setLayout(new FlowLayout());
-        tiles = new JLabel[7];
+        tileLabels = new JLabel[7];
 
         Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
         for (int i = 0; i < 7; i++)
         {
-            tiles[i] = new JLabel(scrabbleGame.tiles.get(i).toString());
-            tiles[i].setBorder(border);
-            tilesPanel.add(tiles[i]);
+            tileLabels[i] = new JLabel();
+            tileLabels[i].setBorder(border);
+            tilesPanel.add(tileLabels[i]);
         }
         verticalPanel.add(tilesPanel);
+
+        presenter.fillTiles();
     }
 
     public void onSubmitClicked(ActionEvent event)
     {
         String word = inputField.getText();
-        if (scrabbleGame.playWord(word))
-        {
-            score++;
-            scoreLabel.setText(String.valueOf(score));
+        presenter.playWord(word);
+        presenter.setOutput();
+    }
 
-            for (int i = 0; i < tiles.length; i++)
-            {
-                tiles[i].setText(scrabbleGame.tiles.get(i).toString());
-            }
-        }
-        output.setText(scrabbleGame.getMessageString());
-
+    public void setScore(String score)
+    {
+        scoreLabel.setText(score);
     }
 
     public static void main(String[] args)
     {
         JFrame frame = new ScrabbleFrame();
         frame.setVisible(true);
+    }
+
+    public void setTiles(List<Character> tiles)
+    {
+        for (int i = 0; i < tiles.size(); i++)
+        {
+            tileLabels[i].setText(tiles.get(i).toString());
+        }
+    }
+
+    public void setOutput(String messageString)
+    {
+        output.setText(messageString);
     }
 }
