@@ -1,5 +1,6 @@
 package weather;
 
+import io.reactivex.Observable;
 import org.junit.jupiter.api.Test;
 import weather.json.CurrentWeather;
 
@@ -11,14 +12,16 @@ class GetCurrentWeatherTest
 {
 
     @Test
-    void getCurrentWeather() throws IOException
+    void getCurrentWeather() throws IOException // CAN USE blocking first for this test
     {
         // given
         GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
         String zipcode = "10019";
 
         // when
-        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather(zipcode);
+        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(zipcode);
+
+        CurrentWeather currentWeather = observable.blockingFirst();
 
         // then
         assertTrue(currentWeather.getTemperature() > 0);
@@ -27,70 +30,4 @@ class GetCurrentWeatherTest
         assertNotNull(currentWeather.getIcon());
         assertNotNull(currentWeather.getDescription());
     }
-
-    @Test
-    void getTemperature() throws IOException
-    {
-        // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-
-        // when
-        double temp = getCurrentWeather.getTemperature();
-
-        // then
-        assertTrue(temp > 0);
-    }
-
-    @Test
-    void getMinTemperature() throws IOException
-    {
-        // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-
-        // when
-        double minTemp = getCurrentWeather.getMinTemperature();
-
-        // then
-        assertTrue(minTemp > 0);
-    }
-
-    @Test
-    void getMaxTemperature() throws IOException
-    {
-        // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-
-        // when
-        double maxTemp = getCurrentWeather.getMaxTemperature();
-
-        // then
-        assertTrue(maxTemp > 0);
-    }
-
-    @Test
-    void getDescription() throws IOException
-    {
-        // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-
-        // when
-        String description = getCurrentWeather.getDescription();
-
-        // then
-        assertNotNull(description);
-    }
-
-    @Test
-    void getIcon() throws IOException
-    {
-        // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-
-        // when
-        String icon = getCurrentWeather.getIcon();
-
-        // then
-        assertNotNull(icon);
-    }
-
 }
