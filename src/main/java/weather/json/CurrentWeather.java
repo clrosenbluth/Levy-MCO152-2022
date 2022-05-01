@@ -27,7 +27,8 @@ public class CurrentWeather
 
     public String getIcon()
     {
-        return weather[0].icon;
+        String icon = weather[0].icon;
+        return "http://openweathermap.org/img/wn/" + icon + "@2x.png";
     }
 
 }

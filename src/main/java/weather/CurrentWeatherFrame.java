@@ -27,7 +27,7 @@ public class CurrentWeatherFrame extends JFrame
     public CurrentWeatherFrame()
     {
         setTitle("Current Weather");
-        setSize(800, 600);
+        setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
