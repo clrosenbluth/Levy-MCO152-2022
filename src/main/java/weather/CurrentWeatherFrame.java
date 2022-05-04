@@ -1,9 +1,5 @@
 package weather;
 
-import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
-import weather.json.CurrentWeather;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +18,8 @@ public class CurrentWeatherFrame extends JFrame
 
     private JPanel verticalPanel;
 
-    private GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+    private final GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(this, getCurrentWeather);
 
     public CurrentWeatherFrame()
     {
@@ -47,7 +44,7 @@ public class CurrentWeatherFrame extends JFrame
     private void addZipcode()
     {
         zipcode = new JTextField();
-        zipcode.setPreferredSize(new Dimension(120, 60));
+        zipcode.setPreferredSize(new Dimension(60, 30));
         verticalPanel.add(zipcode);
     }
 
@@ -66,23 +63,17 @@ public class CurrentWeatherFrame extends JFrame
 
     public void onSubmitClicked(ActionEvent event)
     {
-        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(zipcode.getText());
-        observable
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
-                .subscribe(this::onNext, this::onError);
+        presenter.loadWeatherFromZipcode(zipcode.getText());
     }
 
-    public void onNext(CurrentWeather currentWeather)
+    public void setTemperature(double temp)
     {
-        double temp = currentWeather.getTemperature();
         temperature.setText(String.valueOf(temp));
     }
 
-    public void onError(Throwable throwable)
+    public void showError(String error)
     {
-        temperature.setText("Error: " + throwable.getMessage());
-        throwable.printStackTrace();
+        temperature.setText(error);
     }
 
     public static void main(String[] args)

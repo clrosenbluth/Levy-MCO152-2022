@@ -15,13 +15,12 @@ class GetCurrentWeatherTest
         String zipcode = "10019";
 
         // when
-        Observable<CurrentWeather> observable = getCurrentWeather.getCurrentWeather(zipcode);
-        CurrentWeather currentWeather = observable.blockingFirst();
+        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather(zipcode).blockingFirst();
 
         // then
         assertTrue(currentWeather.getTemperature() > 0);
         assertTrue(currentWeather.getMaxTemperature() > 0);
-        assertTrue(currentWeather.getMinTemperature() > 0);
+        assertTrue(currentWeather.getMinTemperature() > -459.67);   // the fahrenheit of 0 kelvin
         assertNotNull(currentWeather.getIcon());
         assertNotNull(currentWeather.getDescription());
     }
