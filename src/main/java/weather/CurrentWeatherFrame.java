@@ -45,6 +45,7 @@ public class CurrentWeatherFrame extends JFrame
     {
         zipcode = new JTextField();
         zipcode.setPreferredSize(new Dimension(60, 30));
+        zipcode.setToolTipText("Enter zipcode");
         verticalPanel.add(zipcode);
     }
 
