@@ -1,5 +1,7 @@
 package weather;
 
+import weather.json.OpenWeatherMapServiceFactory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,8 +20,8 @@ public class CurrentWeatherFrame extends JFrame
 
     private JPanel verticalPanel;
 
-    private final GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
-    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(this, getCurrentWeather);
+    private final OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
+    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(this, factory.getInstance());
 
     public CurrentWeatherFrame()
     {

@@ -3,19 +3,23 @@ package weather;
 import io.reactivex.Observable;
 import org.junit.jupiter.api.Test;
 import weather.json.CurrentWeather;
+import weather.json.OpenWeatherMapService;
+import weather.json.OpenWeatherMapServiceFactory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class GetCurrentWeatherTest
+class OpenWeatherMapServiceTest
 {
     @Test
     void getCurrentWeather()  // CAN USE blocking first for this test
     {
         // given
-        GetCurrentWeather getCurrentWeather = new GetCurrentWeather();
+        OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
+        OpenWeatherMapService service = factory.getInstance();
         String zipcode = "10019";
 
         // when
-        CurrentWeather currentWeather = getCurrentWeather.getCurrentWeather(zipcode).blockingFirst();
+        CurrentWeather currentWeather = service.getCurrentWeather(zipcode).blockingFirst();
 
         // then
         assertTrue(currentWeather.getTemperature() > 0);

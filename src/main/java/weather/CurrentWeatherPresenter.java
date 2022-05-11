@@ -3,13 +3,14 @@ package weather;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import weather.json.CurrentWeather;
+import weather.json.OpenWeatherMapService;
 
 public class CurrentWeatherPresenter
 {
     private CurrentWeatherFrame view;
-    private GetCurrentWeather model;
+    private OpenWeatherMapService model;
 
-    public CurrentWeatherPresenter(CurrentWeatherFrame view, GetCurrentWeather model)
+    public CurrentWeatherPresenter(CurrentWeatherFrame view, OpenWeatherMapService model)
     {
         this.view = view;
         this.model = model;
