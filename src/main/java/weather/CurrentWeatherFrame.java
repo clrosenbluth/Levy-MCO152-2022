@@ -21,7 +21,9 @@ public class CurrentWeatherFrame extends JFrame
     private JPanel verticalPanel;
 
     private final OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
-    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(this, factory.getInstance());
+    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(
+            this,
+            factory.getInstance());
 
     public CurrentWeatherFrame()
     {
