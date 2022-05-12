@@ -1,12 +1,12 @@
 package weather;
 
-import io.reactivex.Observable;
 import org.junit.jupiter.api.Test;
 import weather.json.CurrentWeather;
 import weather.json.OpenWeatherMapService;
 import weather.json.OpenWeatherMapServiceFactory;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OpenWeatherMapServiceTest
 {
@@ -19,7 +19,7 @@ class OpenWeatherMapServiceTest
         String zipcode = "10019";
 
         // when
-        CurrentWeather currentWeather = service.getCurrentWeather(zipcode).blockingFirst();
+        CurrentWeather currentWeather = service.getCurrentWeather(zipcode).blockingGet();
 
         // then
         assertTrue(currentWeather.getTemperature() > 0);
