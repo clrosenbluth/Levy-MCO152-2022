@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import weather.json.CurrentWeather;
 import weather.json.OpenWeatherMapService;
 
+import javax.inject.Provider;
+
 import static org.mockito.Mockito.*;
 
 class CurrentWeatherPresenterTest
@@ -25,7 +27,8 @@ class CurrentWeatherPresenterTest
         // given
         CurrentWeatherFrame view = mock(CurrentWeatherFrame.class);
         OpenWeatherMapService model = mock(OpenWeatherMapService.class);
-        CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(view, model);
+        Provider<CurrentWeatherFrame> viewProvider = () -> view;
+        CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(viewProvider, model);
         CurrentWeather currentWeather = mock(CurrentWeather.class);
         doReturn(100.0)
                 .when(currentWeather).getTemperature();

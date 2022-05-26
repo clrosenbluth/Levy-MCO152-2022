@@ -1,11 +1,15 @@
 package weather;
 
+import weather.dagger.DaggerCurrentWeatherComponent;
 import weather.json.OpenWeatherMapServiceFactory;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+@Singleton
 public class CurrentWeatherFrame extends JFrame
 {
     /*
@@ -21,12 +25,13 @@ public class CurrentWeatherFrame extends JFrame
     private JPanel verticalPanel;
 
     private final OpenWeatherMapServiceFactory factory = new OpenWeatherMapServiceFactory();
-    private final CurrentWeatherPresenter presenter = new CurrentWeatherPresenter(
-            this,
-            factory.getInstance());
+    private final CurrentWeatherPresenter presenter;
 
-    public CurrentWeatherFrame()
+    @Inject
+    public CurrentWeatherFrame(CurrentWeatherPresenter presenter)
     {
+        this.presenter = presenter;
+
         setTitle("Current Weather");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,7 +88,8 @@ public class CurrentWeatherFrame extends JFrame
 
     public static void main(String[] args)
     {
-        JFrame frame = new CurrentWeatherFrame();
+        JFrame frame = DaggerCurrentWeatherComponent.create()
+                        .getCurrentWeatherFrame();
         frame.setVisible(true);
     }
 }
