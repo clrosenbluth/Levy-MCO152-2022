@@ -5,14 +5,22 @@ import io.reactivex.schedulers.Schedulers;
 import weather.json.CurrentWeather;
 import weather.json.OpenWeatherMapService;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
+@Singleton
 public class CurrentWeatherPresenter
 {
-    private CurrentWeatherFrame view;
+    private Provider<CurrentWeatherFrame> viewProvider;
     private OpenWeatherMapService model;
 
-    public CurrentWeatherPresenter(CurrentWeatherFrame view, OpenWeatherMapService model)
+    @Inject
+    public CurrentWeatherPresenter(
+            Provider<CurrentWeatherFrame> viewProvider,
+            OpenWeatherMapService model)
     {
-        this.view = view;
+        this.viewProvider = viewProvider;
         this.model = model;
     }
 
@@ -27,12 +35,12 @@ public class CurrentWeatherPresenter
     private void onNext(CurrentWeather currentWeather)
     {
         double temp = currentWeather.getTemperature();
-        view.setTemperature(temp);
+        viewProvider.get().setTemperature(temp);
     }
 
     private void onError(Throwable throwable)
     {
-        view.showError("Error: " + throwable.getMessage());
+        viewProvider.get().showError("Error: " + throwable.getMessage());
         throwable.printStackTrace();
     }
 }
