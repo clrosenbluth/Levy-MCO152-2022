@@ -1,15 +1,9 @@
-public class Projectile
+public record Projectile(
+        double angleInDegrees,
+        double initialVelocity
+)
 {
     static final double GRAVITATIONAL_CONSTANT = 9.8;
-
-    private final double angleInDegrees;
-    private final double initialVelocity;
-
-    public Projectile(double angleInDegrees, double initialVelocity)
-    {
-        this.angleInDegrees = angleInDegrees;
-        this.initialVelocity = initialVelocity;
-    }
 
     public double getX(double time)
     {
